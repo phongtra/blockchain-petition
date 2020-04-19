@@ -6,7 +6,7 @@ const ForceInstallation = () => {
     <div>
       <Header>
         Please install Metamask extension for chrome in order to view the
-        petition
+        petition. A computer is required in order to sign and view the petition
       </Header>
       <p>
         Go to{' '}
