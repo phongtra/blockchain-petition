@@ -50,6 +50,9 @@ const App = () => {
       .once('receipt', (receipt) => {
         alert('Success. You signed as ' + name);
         setName('');
+      })
+      .on('error', (error) => {
+        alert('You cannot sign the petition twice');
       });
   };
   const onGetAddresses = async () => {
