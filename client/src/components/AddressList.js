@@ -5,10 +5,14 @@ const AddressList = ({ addresses, onCheckName }) => {
     <>
       {addresses.length ? (
         <>
+          <br />
           {addresses.map((add) => (
-            <button key={add} onClick={() => onCheckName(add)}>
-              {add}
-            </button>
+            <>
+              <button key={add} onClick={() => onCheckName(add)}>
+                {add}
+              </button>
+              <br />
+            </>
           ))}
         </>
       ) : (
