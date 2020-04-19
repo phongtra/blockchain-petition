@@ -6,7 +6,7 @@ const Petition = ({ name, onVote, setName }) => {
     <>
       <Card fluid>
         <Card.Content>
-          <Card.Header>Petition</Card.Header>
+          <Card.Header>Petition for tuition fee</Card.Header>
           <Card.Meta>Xamk student</Card.Meta>
           <Card.Description>
             Dear IT Degree Program and the Principal of XAMK,
