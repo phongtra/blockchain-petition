@@ -20,7 +20,7 @@ const ForceInstallation = () => {
       </p>
       <p>
         After installation, create a new wallet, and follow instruction provided
-        by Metamask
+        by Metamask. After successfully creating the wallet, refresh the page.
       </p>
       <p>
         Make sure you are in Rinkeby Network. To change network, click on the

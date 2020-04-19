@@ -7,6 +7,7 @@ const HeaderTexts = ({ account }) => {
       <Header as="h2">Hello, your ethereum account is: {account}</Header>
       <Header as="h3" color="orange">
         Make sure you are in Rinkeby network, configure MetaMask appropriately
+        and refresh the page after every change to Metamask
       </Header>
       <Header as="h3">
         You need eth to sign the petition, you can go to{' '}
