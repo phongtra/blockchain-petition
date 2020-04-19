@@ -11,7 +11,8 @@ const HeaderTexts = ({ account }) => {
       <Header as="h3">
         You need eth to sign the petition, you can go to{' '}
         <a href="https://faucet.rinkeby.io/">https://faucet.rinkeby.io/</a> to
-        get some eth or DM me via +84393259607 on Whatsapp
+        get some eth or DM me via +84393259607 (Phong Tran), +358465472862 (Thao
+        Nguyen), +358465714468 (Nghi Nguyen) on Whatsapp
       </Header>
       <Header as="h4">
         For teacher, you can check the name of each address by clicking on one

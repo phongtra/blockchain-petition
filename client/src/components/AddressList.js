@@ -4,13 +4,13 @@ const AddressList = ({ addresses, onCheckName }) => {
   return (
     <>
       {addresses.length ? (
-     
+        <>
           {addresses.map((add) => (
             <button key={add} onClick={() => onCheckName(add)}>
               {add}
             </button>
           ))}
-        
+        </>
       ) : (
         ''
       )}
