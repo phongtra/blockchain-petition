@@ -5,6 +5,7 @@ import { SC_ADDRESS, VOTE_ABI } from './config';
 import Petition from './components/Petition';
 import HeaderTexts from './components/HeaderTexts';
 import AddressList from './components/AddressList';
+import ForceInstallation from './components/ForceInstallation';
 
 const App = () => {
   const [account, setAccount] = useState('');
@@ -64,7 +65,7 @@ const App = () => {
     alert('The address: ' + address + ' belong to ' + name);
   };
   if (notInstall) {
-    return <h1>Please install MetaMask</h1>;
+    return <ForceInstallation />;
   }
   return (
     <Container>
