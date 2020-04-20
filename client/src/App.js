@@ -8,6 +8,7 @@ import AddressList from './components/AddressList';
 import ForceInstallation from './components/ForceInstallation';
 
 const App = () => {
+  const [fetching, setFetching] = useState(false);
   const [account, setAccount] = useState('');
   const [notInstall, setNotInstall] = useState(false);
   const [name, setName] = useState('');
@@ -53,12 +54,21 @@ const App = () => {
         setName('');
       })
       .on('error', (error) => {
-        alert('You cannot sign the petition twice');
+        if (
+          error.message ===
+          'MetaMask Tx Signature: User denied transaction signature.'
+        ) {
+          alert(error.message);
+        } else alert('You cannot sign the petition twice');
       });
   };
   const onGetAddresses = async () => {
+    setFetching(true);
     const addresses = await vote.methods.addressList().call();
     setAddresses(addresses);
+    setFetching(false);
+    if (addresses.length) alert('Addresses fetched');
+    else alert('No address has signed this petition');
   };
   const onCheckName = async (address) => {
     const name = await vote.methods.nameFromAddress(address).call();
@@ -72,7 +82,12 @@ const App = () => {
       <HeaderTexts account={account} />
       <Button onClick={onVoteCheck}>Check vote count</Button>
       <Petition name={name} setName={setName} onVote={onVote} />
-      <Button color="green" onClick={onGetAddresses} content="View signees" />
+      <Button
+        loading={fetching}
+        color="green"
+        onClick={onGetAddresses}
+        content="View signees"
+      />
       <AddressList onCheckName={onCheckName} addresses={addresses} />
     </Container>
   );
