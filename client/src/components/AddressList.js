@@ -3,6 +3,7 @@ import React from 'react';
 const AddressList = ({ addresses, onCheckName }) => {
   return (
     <>
+      <br />
       {addresses.length ? (
         <>
           <br />
