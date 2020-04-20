@@ -8,8 +8,6 @@ import AddressList from './components/AddressList';
 import ForceInstallation from './components/ForceInstallation';
 
 const App = () => {
-  const [submitting, setSubmitting] = useState(false);
-  const [fetching, setFetching] = useState(false);
   const [account, setAccount] = useState('');
   const [notInstall, setNotInstall] = useState(false);
   const [name, setName] = useState('');
@@ -44,9 +42,7 @@ const App = () => {
     alert('There are ' + count + ' votes');
   };
   const onVote = async () => {
-    setSubmitting(true);
     if (!name) {
-      setSubmitting(false);
       return alert('Must input name');
     }
     vote.methods
@@ -55,19 +51,14 @@ const App = () => {
       .once('receipt', (receipt) => {
         alert('Success. You signed as ' + name);
         setName('');
-        setSubmitting(false);
       })
       .on('error', (error) => {
-        setSubmitting(false);
         alert('You cannot sign the petition twice');
       });
   };
   const onGetAddresses = async () => {
-    setFetching(true);
     const addresses = await vote.methods.addressList().call();
     setAddresses(addresses);
-    setFetching(false);
-    alert('Addresses fetched');
   };
   const onCheckName = async (address) => {
     const name = await vote.methods.nameFromAddress(address).call();
@@ -80,18 +71,8 @@ const App = () => {
     <Container>
       <HeaderTexts account={account} />
       <Button onClick={onVoteCheck}>Check vote count</Button>
-      <Petition
-        name={name}
-        setName={setName}
-        onVote={onVote}
-        submitting={submitting}
-      />
-      <Button
-        loading={fetching}
-        color="green"
-        onClick={onGetAddresses}
-        content="View signees"
-      />
+      <Petition name={name} setName={setName} onVote={onVote} />
+      <Button color="green" onClick={onGetAddresses} content="View signees" />
       <AddressList onCheckName={onCheckName} addresses={addresses} />
     </Container>
   );

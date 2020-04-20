@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Input, Button } from 'semantic-ui-react';
 
-const Petition = ({ name, onVote, setName, submitting }) => {
+const Petition = ({ name, onVote, setName }) => {
   return (
     <>
       <Card fluid>
@@ -64,13 +64,7 @@ const Petition = ({ name, onVote, setName, submitting }) => {
             style={{ marginBottom: '1vh' }}
           />
           <p>If you are going to sign, please enter your real name</p>
-          <Button
-            onClick={onVote}
-            fluid
-            primary
-            content="Sign"
-            loading={submitting}
-          />
+          <Button onClick={onVote} fluid primary content="Sign" />
         </Card.Content>
       </Card>
     </>
