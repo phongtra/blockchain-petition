@@ -9,6 +9,7 @@ import ForceInstallation from './components/ForceInstallation';
 
 const App = () => {
   const [fetching, setFetching] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [account, setAccount] = useState('');
   const [notInstall, setNotInstall] = useState(false);
   const [name, setName] = useState('');
@@ -50,12 +51,14 @@ const App = () => {
     if (!name) {
       return alert('Must input name');
     }
+    setSubmitting(true);
     vote.methods
       .vote(name)
       .send({ from: account })
       .once('receipt', (receipt) => {
         alert('Success. You signed as ' + name);
         setName('');
+        setSubmitting(false);
       })
       .on('error', (error) => {
         if (
@@ -63,10 +66,12 @@ const App = () => {
           'MetaMask Tx Signature: User denied transaction signature.'
         ) {
           alert(error.message);
+          setSubmitting(false);
         } else
           alert(
             'You cannot sign the petition twice and you must be on Rinkeby network'
           );
+        setSubmitting(false);
       });
   };
   const onGetAddresses = async () => {
@@ -93,7 +98,12 @@ const App = () => {
     <Container>
       <HeaderTexts account={account} />
       <Button onClick={onVoteCheck}>Check vote count</Button>
-      <Petition name={name} setName={setName} onVote={onVote} />
+      <Petition
+        submitting={submitting}
+        name={name}
+        setName={setName}
+        onVote={onVote}
+      />
       <Button
         loading={fetching}
         color="green"
