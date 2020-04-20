@@ -39,8 +39,12 @@ const App = () => {
     loadVoteCount();
   }, []);
   const onVoteCheck = async () => {
-    const count = await vote.methods.votes().call();
-    alert('There are ' + count + ' votes');
+    try {
+      const count = await vote.methods.votes().call();
+      alert('There are ' + count + ' votes');
+    } catch (e) {
+      alert('You must be on Rinkeby network');
+    }
   };
   const onVote = async () => {
     if (!name) {
@@ -59,16 +63,24 @@ const App = () => {
           'MetaMask Tx Signature: User denied transaction signature.'
         ) {
           alert(error.message);
-        } else alert('You cannot sign the petition twice');
+        } else
+          alert(
+            'You cannot sign the petition twice and you must be on Rinkeby network'
+          );
       });
   };
   const onGetAddresses = async () => {
     setFetching(true);
-    const addresses = await vote.methods.addressList().call();
-    setAddresses(addresses);
-    setFetching(false);
-    if (addresses.length) alert('Addresses fetched');
-    else alert('No address has signed this petition');
+    try {
+      const addresses = await vote.methods.addressList().call();
+      setAddresses(addresses);
+      setFetching(false);
+      if (addresses.length) alert('Addresses fetched');
+      else alert('No address has signed this petition');
+    } catch {
+      alert('You must be on Rinkeby network');
+      setFetching(false);
+    }
   };
   const onCheckName = async (address) => {
     const name = await vote.methods.nameFromAddress(address).call();
