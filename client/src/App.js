@@ -5,13 +5,12 @@ import { SC_ADDRESS, VOTE_ABI } from './config';
 import Petition from './components/Petition';
 import HeaderTexts from './components/HeaderTexts';
 import AddressList from './components/AddressList';
-import ForceInstallation from './components/ForceInstallation';
+import ModalText from './components/ModalText';
 
 const App = () => {
   const [fetching, setFetching] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [account, setAccount] = useState('');
-  const [notInstall, setNotInstall] = useState(false);
   const [name, setName] = useState('');
   const [vote, setVote] = useState(null);
   const [addresses, setAddresses] = useState([]);
@@ -20,16 +19,20 @@ const App = () => {
       alert(
         'Please install MetaMask extension for chrome before using this site'
       );
-      setNotInstall(true);
+      window.web3 = new Web3(
+        new Web3.providers.HttpProvider(
+          'https://rinkeby.infura.io/v3/ac9126c9073b4e1786b5f7139c5a2b21'
+        )
+      );
     } else {
       // console.log(Web3.givenProvider);
       window.web3 = new Web3(window.ethereum);
       await window.ethereum.enable();
       const acc = await window.web3.eth.getAccounts();
       setAccount(acc[0]);
-      const voteContract = new window.web3.eth.Contract(VOTE_ABI, SC_ADDRESS);
-      setVote(voteContract);
     }
+    // const voteContract = new window.web3.eth.Contract(VOTE_ABI, SC_ADDRESS);
+    // setVote(voteContract);
   };
   useEffect(() => {
     loadBlockchainData();
@@ -40,10 +43,12 @@ const App = () => {
     loadVoteCount();
   }, []);
   const onVoteCheck = async () => {
+    console.log(vote);
     try {
       const count = await vote.methods.votes().call();
       alert('There are ' + count + ' votes');
     } catch (e) {
+      console.error(e);
       alert('You must be on Rinkeby network');
     }
   };
@@ -91,12 +96,11 @@ const App = () => {
     const name = await vote.methods.nameFromAddress(address).call();
     alert('The address: ' + address + ' belong to ' + name);
   };
-  if (notInstall) {
-    return <ForceInstallation />;
-  }
+
   return (
     <Container>
       <HeaderTexts account={account} />
+      <ModalText />
       <Button onClick={onVoteCheck}>Check vote count</Button>
       <Petition
         submitting={submitting}
