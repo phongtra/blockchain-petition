@@ -5,7 +5,8 @@ import ForceInstallation from './ForceInstallation';
 const ModalText = () => {
   return (
     <div>
-      <Modal trigger={<Button>Show Modal</Button>}>
+      <br />
+      <Modal trigger={<Button>Show MetaMask instruction</Button>}>
         <Modal.Header>Instruction for install MetaMask</Modal.Header>
         <Modal.Content>
           <ForceInstallation />
